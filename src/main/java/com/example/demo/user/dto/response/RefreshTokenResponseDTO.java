@@ -1,9 +1,9 @@
 package com.example.demo.user.dto.response;
 
 import com.example.demo.common.ResponseCode;
+import com.example.demo.common.ResponseDTO;
 import com.example.demo.common.ResponseMessage;
 import lombok.Getter;
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;

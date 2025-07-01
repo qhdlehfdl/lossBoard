@@ -1,6 +1,7 @@
 package com.example.demo.user.dto.response;
 
 import com.example.demo.common.ResponseCode;
+import com.example.demo.common.ResponseDTO;
 import com.example.demo.common.ResponseMessage;
 import lombok.Getter;
 import org.springframework.http.HttpHeaders;

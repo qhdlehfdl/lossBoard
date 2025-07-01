@@ -1,15 +1,14 @@
 package com.example.demo.user.dto.response;
 
 import com.example.demo.common.ResponseCode;
+import com.example.demo.common.ResponseDTO;
 import com.example.demo.common.ResponseMessage;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 
-import java.time.Duration;
-
-public class LogoutResponseDTO extends ResponseDTO{
+public class LogoutResponseDTO extends ResponseDTO {
 
     private LogoutResponseDTO() {super(ResponseCode.SUCCESS,ResponseCode.SUCCESS);}
 

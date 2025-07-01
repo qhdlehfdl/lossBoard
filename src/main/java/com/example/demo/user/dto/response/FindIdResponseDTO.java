@@ -1,13 +1,14 @@
 package com.example.demo.user.dto.response;
 
 import com.example.demo.common.ResponseCode;
+import com.example.demo.common.ResponseDTO;
 import com.example.demo.common.ResponseMessage;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
-public class FindIdResponseDTO extends ResponseDTO{
+public class FindIdResponseDTO extends ResponseDTO {
     private String id;
 
     private FindIdResponseDTO(String id){

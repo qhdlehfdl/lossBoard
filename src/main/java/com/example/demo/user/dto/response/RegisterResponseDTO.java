@@ -1,14 +1,14 @@
 package com.example.demo.user.dto.response;
 
 import com.example.demo.common.ResponseCode;
+import com.example.demo.common.ResponseDTO;
 import com.example.demo.common.ResponseMessage;
 import lombok.Getter;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
-public class RegisterResponseDTO extends ResponseDTO{
+public class RegisterResponseDTO extends ResponseDTO {
     private RegisterResponseDTO(){
         super(ResponseCode.SUCCESS,ResponseCode.SUCCESS);
     }

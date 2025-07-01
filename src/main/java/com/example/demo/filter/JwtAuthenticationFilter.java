@@ -43,6 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
+            //authenticationPrincipal 사용하면 id 넘겨줌
             AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(ID, null, AuthorityUtils.NO_AUTHORITIES);
 
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
