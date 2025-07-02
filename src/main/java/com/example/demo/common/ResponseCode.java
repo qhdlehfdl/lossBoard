@@ -11,6 +11,7 @@ public interface ResponseCode {
     String DUPLICATE_STUDENTID = "DSID";
     String NOT_EXISTED_USER = "NU";
     String NOT_EXISTED_BOARD = "NB";
+    String NOT_EXISTED_COMMENT = "NC";
 
     //401
     String SIGN_IN_FAIL = "SF";

@@ -23,12 +23,21 @@ public class Board {
     private int comment_count;
     private LocalDateTime write_time;
 
-    public Board(CreatePostRequestDTO dto, String writer_id){
+    public Board(CreatePostRequestDTO dto, String writerID){
         this.title=dto.getTitle();
         this.content = dto.getContent();
-        this.writer_id = writer_id;
+        this.writer_id = writerID;
         this.comment_count = 0;
         this.write_time = LocalDateTime.now();
     }
 
+    public void modifyPost(CreatePostRequestDTO dto){
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+    }
+
+    public void increaseCommentCount(){
+        this.comment_count++;
+    }
+    public void decreaseCommentCount(){this.comment_count--;}
 }
