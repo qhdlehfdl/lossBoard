@@ -29,4 +29,4 @@
 * 로그인시에 access, refresh 토큰 발급. 프론트에서 access 토큰 관리하고 저장.
 * 로그아웃시에 백엔드에서 쿠키, db에서 refresh 토큰 삭제. access 토큰은 프론트에서 삭제.
 * [JwtProvider.java](https://github.com/qhdlehfdl/lossBoard/blob/ab50d410f5a19807c261ab3b5e50b4b317380152/src/main/java/com/example/demo/provider/JwtProvider.java): jwt토큰 발급. 토큰 유효한지 판단.
-* [JwtAuthenticationFilter.java](https://github.com/qhdlehfdl/lossBoard/blob/ab50d410f5a19807c261ab3b5e50b4b317380152/src/main/java/com/example/demo/filter/JwtAuthenticationFilter.java): 프론트에서 헤더에 토큰 포함해서 요청-> parseBearerToken으로 토큰 추출. doFilterInternal에서 토큰 추출한걸로 user id 알아냄. 이후 사용자 인증 절차
+* [JwtAuthenticationFilter.java](https://github.com/qhdlehfdl/lossBoard/blob/ab50d410f5a19807c261ab3b5e50b4b317380152/src/main/java/com/example/demo/filter/JwtAuthenticationFilter.java): 프론트에서 헤더에 토큰 포함해서 요청-> parseBearerToken으로 토큰 추출. doFilterInternal에서 토큰 추출한걸로 user id 알아냄(@AuthenticationPrincipal로 사용가능). 이후 사용자 인증 절차
