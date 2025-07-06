@@ -61,3 +61,20 @@
 ### 메모
 * user id는 @AuthenticationPrincipal을 통해 가져올 수 있음. -> 필터를 통해 받음
 * foreign key를 통해 게시물 삭제하면 그에 관한 댓글도 같이 삭제
+---
+## 채팅 구현
+* 웹소켓+stomp 사용. stomp -> 채팅방별로 주소 할당 가능.
+* 일반 http 요청이 있어야 응답가능. 웹소켓은 한번 연결되면 양방향 통신가능. 
+* 로그인한 사용자가 채팅방 목록 누르면 subscribe하고 있는 채팅방 목록 db에서 가져와서 보여줌.
+* ws 접속 후 토큰 검증 -> 성공 후 세션에 userID 저장. 이후 userID 추출해서 사용.
+* WebSocketConfig, JwtHandshakeInterceptor(jwt 토큰 검증) 추가 구현
+* 채팅방 들어가면 채팅내역불러오고 ws접속 and /topic/chat/roomID(채팅방 메시지), /queue/errors(오류 메시지 받는 채널) subscribe 시작.
+---
+* 채팅방 만들기: POST/board/{boardID}/create
+* response: code, message, roomId
+* 채팅걸기 누르면 프론트에서 createChatRoom 호출. 이미 채팅방이 있다면 해당 채팅방 id 리턴. 없으면 새로 만들고 채팅방 id 리턴.
+---
+* 채팅: @MessageMapping("/chat/{roomId}/send")
+* request: content
+* response: code, message, senderID, content, sendTime
+* roomId로 채팅방에 참여하고 있는 사용자마다 subscribe하고 있는 주소 다름.
