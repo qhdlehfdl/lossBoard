@@ -1,6 +1,7 @@
 package com.example.demo.user.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,6 @@ public class RegisterRequestDTO {
 
     private String name;
 
-    @NotBlank(message = "학번은 필수 입력 항목입니다.")
+    @NotNull(message = "학번은 필수 입력 항목입니다.")
     private Integer studentID;
 }

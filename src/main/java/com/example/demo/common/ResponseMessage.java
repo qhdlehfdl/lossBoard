@@ -12,7 +12,7 @@ public interface ResponseMessage {
     String NOT_EXISTED_USER = "This user does not exist";
     String NOT_EXISTED_BOARD = "This board does not exist";
     String NOT_EXISTED_COMMENT = "This comment does not exist";
-
+    String NOT_EXISTED_ROOM = "This room does not exist";
     //401
     String SIGN_IN_FAIL = "Login information mismatch";
     String MISMATCH_FAIL = "Information mismatch";

@@ -12,6 +12,7 @@ public interface ResponseCode {
     String NOT_EXISTED_USER = "NU";
     String NOT_EXISTED_BOARD = "NB";
     String NOT_EXISTED_COMMENT = "NC";
+    String NOT_EXISTED_ROOM = "NR";
 
     //401
     String SIGN_IN_FAIL = "SF";
