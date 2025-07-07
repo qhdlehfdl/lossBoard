@@ -33,28 +33,28 @@
 
 ---
 ## 게시물, 댓글 구현
-* 게시물 작성: POST /board/create
+* 게시물 작성: POST /api/board/create
 * request: title, content
 * response: code, message
 * 누가 작성했는지 어떻게 암? -> @AuthenticationPrincipal 통해 user id 가져옴
 ---
-* 게시물 삭제: DELETE /board/delete/{boardID}
+* 게시물 삭제: DELETE /api/board/delete/{boardID}
 * response: code, message
 * request 따로 없음 @PathVariable 통해 boardID 가져옴 -> db접근
 ---
-* 게시물 수정: PATCH /board/modify/{boardID}
+* 게시물 수정: PATCH /api/board/modify/{boardID}
 * request: title, content
 * response: code, message
 * 게시물 작성 requestDTO 똑같이 사용
 --- 
-* 댓글 작성: POST /{boardID}/comment/create
+* 댓글 작성: POST /api/{boardID}/comment/create
 * request: content
 * response: code, message
 ---
-* 댓글 삭제: DELETE /{boardID}/comment/delete/{commentID}
+* 댓글 삭제: DELETE /api/{boardID}/comment/delete/{commentID}
 * response: code, message
 ---
-* 댓글 수정: POST /{boardID}/comment/modify/{commentID}
+* 댓글 수정: POST /api/{boardID}/comment/modify/{commentID}
 * request: content
 * response: code, message
 * 댓글 작성 requestDTO 사용
@@ -66,11 +66,11 @@
 * 웹소켓+stomp 사용. stomp -> 채팅방별로 주소 할당 가능.
 * 일반 http 요청이 있어야 응답가능. 웹소켓은 한번 연결되면 양방향 통신가능. 
 * 로그인한 사용자가 채팅방 목록 누르면 subscribe하고 있는 채팅방 목록 db에서 가져와서 보여줌.
-* ws 접속 후 토큰 검증 -> 성공 후 세션에 userID 저장. 이후 userID 추출해서 사용.
-* WebSocketConfig, JwtHandshakeInterceptor(jwt 토큰 검증) 추가 구현
+* ws 접속 전 토큰 검증 -> 성공 후 세션에 userID 저장. 이후 userID 추출해서 사용.
+* subscribe시에 db에서 해당 채팅방에 있는 사용자인지 권한체크
 * 채팅방 들어가면 채팅내역불러오고 ws접속 and /topic/chat/roomID(채팅방 메시지), /queue/errors(오류 메시지 받는 채널) subscribe 시작.
 ---
-* 채팅방 만들기: POST/board/{boardID}/create
+* 채팅방 만들기: POST/api/chat/board/{boardID}/create
 * response: code, message, roomId
 * 채팅걸기 누르면 프론트에서 createChatRoom 호출. 이미 채팅방이 있다면 해당 채팅방 id 리턴. 없으면 새로 만들고 채팅방 id 리턴.
 ---
@@ -78,3 +78,7 @@
 * request: content
 * response: code, message, senderID, content, sendTime
 * roomId로 채팅방에 참여하고 있는 사용자마다 subscribe하고 있는 주소 다름.
+---
+* 채팅내역 불러오기: GET /api/chat/room/{roomID}/history?cursorID=?&size=?
+* response: code,message, chatMessageList
+* 시간순으로 size개씩 리턴
