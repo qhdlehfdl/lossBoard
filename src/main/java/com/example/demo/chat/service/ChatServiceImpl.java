@@ -4,6 +4,7 @@ import com.example.demo.board.repository.BoardRepository;
 import com.example.demo.chat.dto.request.ChatMessageRequestDTO;
 import com.example.demo.chat.dto.response.ChatMessageResponseDTO;
 import com.example.demo.chat.dto.response.CreateChatRoomResponseDTO;
+import com.example.demo.chat.dto.response.GetChatMessageResponseDTO;
 import com.example.demo.chat.entity.ChatMessage;
 import com.example.demo.chat.entity.ChatRoom;
 import com.example.demo.chat.entity.ChatRoomMember;
@@ -15,12 +16,14 @@ import com.example.demo.common.ResponseDTO;
 import com.example.demo.common.ResponseMessage;
 import com.example.demo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -117,6 +120,37 @@ public class ChatServiceImpl implements ChatService {
             errorBroadcast(new ResponseDTO(ResponseCode.DATABASE_ERROR, ResponseMessage.DATABASE_ERROR),senderId);
             return;
         }
+    }
+
+    @Override
+    public ResponseEntity<? super GetChatMessageResponseDTO> getChatMessage(Integer roomID, String userID, Integer cursorID, int size) {
+
+        List<ChatMessage> chatMessages = new ArrayList<>();
+        List<ChatMessageResponseDTO> messages = new ArrayList<>();
+
+        try {
+            boolean isInRoom = chatRoomMemberRepository.existsByChatRoomIdAndUserId(roomID, userID);
+            if(isInRoom) return GetChatMessageResponseDTO.noPermission();
+
+            LocalDateTime cursorTime = null;
+            if (cursorID != null) {
+                ChatMessage cursorMessage = chatMessageRepository.findById(cursorID).orElse(null);
+                if (cursorMessage == null) return GetChatMessageResponseDTO.databaseError();
+                cursorTime = cursorMessage.getSendTime();
+                chatMessages = chatMessageRepository.findByRoomIdAndSendTimeBeforeOrderBySendTimeDesc(roomID, cursorTime, PageRequest.of(0, size));
+            }else{
+                chatMessages = chatMessageRepository.findByChatRoomIdOrderBySendTimeDesc(roomID, PageRequest.of(0,size));
+            }
+
+            messages = chatMessages.stream()
+                    .map(m -> ChatMessageResponseDTO.of(m.getSenderId(), m.getContent(), m.getSendTime()))
+                    .toList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GetChatMessageResponseDTO.databaseError();
+        }
+
+        return GetChatMessageResponseDTO.success(messages);
     }
 
     public void errorBroadcast(ResponseDTO dto, String senderId){

@@ -19,8 +19,7 @@ public class JwtHandshakeInterceptor implements HandshakeInterceptor {
 
     private final JwtProvider jwtProvider;
 
-    //웹소켓과 연결하기 전 jwt로 허가된 사용자만 웹소켓 연결. 웹소켓 연결 판단
-    //웹소켓 관련 -> ServerHttpRequest 사용
+    //ws 접속시에 jwt토큰으로 권한 체크 and 세선에 userId 저장
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws  Exception{
 
